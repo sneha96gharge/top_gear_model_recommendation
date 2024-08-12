@@ -15,6 +15,7 @@ def get_filtered_data():
     ratio = data.get('ratio')
     o_p_speed = data.get('o_p_speed')
     service_factor=data.get('service_factor')
+    print(f"Service Factor: {service_factor}")
 
     # Apply the filters
     filtered_df = df[(df['kW'] == kw) &
