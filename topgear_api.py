@@ -28,7 +28,7 @@ def get_filtered_data():
         # Extract the values from the desired column
         results = filtered_df[service_factor].values.tolist()
     else:
-        results = []
+        results = 'Please contact to support team'
 
     # Return the result as a JSON response
     return jsonify(results)
