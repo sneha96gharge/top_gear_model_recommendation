@@ -5,7 +5,7 @@ import numpy as np
 app = Flask(__name__)
 
 # Load the Excel file once at the start
-df = pd.read_excel("top_gear_data.xlsx")
+df = pd.read_excel("data/top_gear_data.xlsx")
 
 @app.route('/get_filtered_data', methods=['POST'])
 def get_filtered_data():
