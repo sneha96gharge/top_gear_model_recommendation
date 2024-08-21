@@ -1,38 +1,37 @@
-import streamlit as st
+from flask import Flask, request, jsonify
 import pandas as pd
 import numpy as np
+
+app = Flask(_name_)
 
 # Load the Excel file once at the start
 df = pd.read_excel("data/top_gear_data.xlsx")
 
-# Streamlit app
-def main():
-    st.title("Filtered Data Viewer")
+@app.route('/get_filtered_data', methods=['POST'])
+def get_filtered_data():
+    data = request.json
+    kw = data.get('kw')
+    col_1440 = data.get('col_1440')
+    ratio = data.get('ratio')
+    o_p_speed = data.get('o_p_speed')
+    service_factor=data.get('service_factor')
+    print(f"Service Factor: {service_factor}")
 
-    # Input fields using Streamlit widgets
-    kw = st.number_input('Enter kW:', value=0.0, step=0.1)
-    col_1440 = st.number_input('Enter 1440 value:', value=0.0, step=0.1)
-    ratio = st.number_input('Enter Ratio:', value=0.0, step=0.1)
-    o_p_speed = st.number_input('Enter O/p Speed:', value=0.0, step=0.1)
-    service_factor = st.number_input('Enter Service Factor:', value=0.0, step=0.1)
+    # Apply the filters
+    filtered_df = df[(df['kW'] == kw) &
+                     (df[1440] == col_1440) &
+                     (df['Ratio'] == ratio) &
+                     (np.isclose(df['O/p Speed'], o_p_speed, atol=1e-2))]
 
-    # Apply the filters when the user clicks the button
-    if st.button('Get Model'):
-        filtered_df = df[(df['kW'] == kw) &
-                         (df[1440] == col_1440) &
-                         (df['Ratio'] == ratio) &
-                         (np.isclose(df['O/p Speed'], o_p_speed, atol=1e-2))]
+    # Check if the filtered data is not empty
+    if not filtered_df.empty:
+        # Extract the values from the desired column
+        results = filtered_df[service_factor].values.tolist()
+    else:
+        results = 'Please contact to support team'
 
-        # Check if the filtered data is not empty
-        if not filtered_df.empty:
-            # Assuming service_factor corresponds to a column name
-            if service_factor in filtered_df.columns:
-                results = filtered_df[service_factor].values.tolist()
-                st.write("Filtered Model:", results)
-            else:
-                st.write(f"No column found for Service Factor: {service_factor}")
-        else:
-            st.write("No matching data found.")
+    # Return the result as a JSON response
+    return jsonify(results)
 
-if __name__ == '_main_':
-    main()
+if _name_ == '_main_':  # Corrected line
+    app.run(debug=True)
