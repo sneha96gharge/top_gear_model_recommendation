@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 
 # Load the Excel file once at the start
-df = pd.read_excel("top_gear_data.xlsx")
+df = pd.read_excel("data/top_gear_data.xlsx")
 
 # Streamlit app
 def main():
