@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 import pandas as pd
 import numpy as np
 
-app = Flask(_name_)
+app = Flask(__name__)
 
 # Load the Excel file once at the start
 df = pd.read_excel("data/top_gear_data.xlsx")
