@@ -33,5 +33,5 @@ def get_filtered_data():
     # Return the result as a JSON response
     return jsonify(results)
 
-if _name_ == '_main_':  # Corrected line
+if __name__ == "__main__":  # Corrected line
     app.run(debug=True)
