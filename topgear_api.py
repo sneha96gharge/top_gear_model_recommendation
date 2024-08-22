@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS, cross_origin
 import pandas as pd
 import numpy as np
 
@@ -8,6 +9,7 @@ app = Flask(__name__)
 df = pd.read_excel("data/top_gear_data.xlsx")
 
 @app.route('/calculate_speed', methods=['POST'])
+@cross_origin()
 def calculate_speed():
     data = request.json
 
@@ -21,6 +23,7 @@ def calculate_speed():
     return jsonify({"o_p_speed": round(o_p_speed, 2)})
 
 @app.route('/filter_data', methods=['POST'])
+@cross_origin()
 def filter_data():
     data = request.json
 
