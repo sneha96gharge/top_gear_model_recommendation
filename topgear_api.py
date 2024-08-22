@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 
 app = Flask(__name__)
+CORS(app)
 
 # Load the Excel file once at the start
 df = pd.read_excel("data/top_gear_data.xlsx")
