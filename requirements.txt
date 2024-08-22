@@ -4,3 +4,4 @@ numpy==1.25.0
 gunicorn==20.1.0
 openpyxl
 streamlit
+flask_cors
